@@ -10,26 +10,48 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    //スタートボタン
-    @IBAction func tapStartButton(_ sender: Any) {
-    }
-    //リセットボタン
-    @IBAction func tapResetButton(_ sender: Any) {
-    }
-    
-    @IBAction func tapStopButton(_ sender: Any) {
-    }
+    //タイマーの動作を確認するための一時的なラベル
+    @IBOutlet weak var tmp: UILabel!
     
     //時間表示のラベル
     @IBOutlet weak var timerLabel: UILabel!
     
+    
     //タイマー
-    var timer : Timer!
+    var timer: Timer!
+    
+    //カウント
+    var count:Int = 300
+
+    //スタートボタン
+    @IBAction func tapStartButton(_ sender: Any) {
+        //timerを動かした時の処理
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+            self.count -= 1
+            self.tmp.text = String(self.count)
+        })
+    }
+
+    //ストップボタン
+    @IBAction func tapStopButton(_ sender: Any) {
+        //タイマーを停止した時の処理
+        timer.invalidate()
+        
+    }
+    
+    //リセットボタン
+    @IBAction func tapResetButton(_ sender: Any) {
+        count = 300
+        tmp.text = "300"
+    }
+    
+    //タイムアップの時の動作
+    
+    //画像のアニメーション
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
