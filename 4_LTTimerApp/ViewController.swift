@@ -13,38 +13,54 @@ class ViewController: UIViewController {
     //時間表示のラベル
     @IBOutlet weak var timerLabel: UILabel!
     
-    
     //タイマー
     var timer: Timer!
     
     //カウント
-    var count:Int = 255
+    var count:Int = 5
 
-    //スタートボタン
+    //スタートボタンを押した時の処理
     @IBAction func tapStartButton(_ sender: Any) {
-        //timerを動かした時の処理
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
-            self.count -= 1
-            let min: Int = self.count / 60
-            let sec: Int = self.count % 60
-            self.timerLabel.text = "\(min):" + String(format: "%02d", sec)
+        //タイマーを動かす
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in self.timerAction()
+            print(self.count)
         })
     }
-
-    //ストップボタン
-    @IBAction func tapStopButton(_ sender: Any) {
-        //タイマーを停止した時の処理
-        timer.invalidate()
+    
+    //タイマーを動かした時に表示を変更する処理
+    func timerAction() {
+        //カウンターを減らす
+        count -= 1
+        
+        //タイマー表示を変更する
+        let min: Int = count / 60
+        let sec: Int = count % 60
+        timerLabel.text = "\(min):" + String(format: "%02d", sec)
+        //0秒の時にタイマーを停止する
+        if count == 0 {
+            timer.invalidate()
+        }
         
     }
     
-    //リセットボタン
-    @IBAction func tapResetButton(_ sender: Any) {
-        count = 300
-//        tmp.text = "300"
+    //ストップボタンを押した時の処理
+    @IBAction func tapStopButton(_ sender: Any) {
+        //タイマーを停止する
+        timer.invalidate()
     }
     
-    //タイムアップの時の動作
+    //リセットボタンを押した時の処理
+    @IBAction func tapResetButton(_ sender: Any) {
+        //タイマーを停止する
+        timer.invalidate()
+        
+        //カウンターリセットする
+        count = 300
+        
+        //タイマー表示をリセットする
+        self.timerLabel.text = "5:00"
+    }
+    
     
     //画像のアニメーション
     
