@@ -9,17 +9,29 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    //スタートボタン
+    @IBAction func tapStartButton(_ sender: Any) {
+    }
+    //リセットボタン
+    @IBAction func tapResetButton(_ sender: Any) {
     }
     
+    @IBAction func tapStopButton(_ sender: Any) {
+    }
     
+    //時間表示のラベル
+    @IBOutlet weak var timerLabel: UILabel!
     
+    //タイマー
+    var timer : Timer!
     
-    
-    
-    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
