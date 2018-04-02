@@ -17,19 +17,16 @@ class ViewController: UIViewController {
     var timer: Timer!
 
     //残り時間をカウントするための変数
-    var count:Int = 10
+    var count:Int = 300
     
     //画像
     @IBOutlet weak var dogImage: UIImageView!
 
-    
     //スタートボタンを押した時の処理
     @IBAction func tapStartButton(_ sender: Any) {
         //タイマーのカウントダウン処理
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in self.timerAction()
         })
-        //画像のアニメーション処理
-        imageAnimetion(img: #imageLiteral(resourceName: "dog"))
     }
     
     
@@ -43,6 +40,9 @@ class ViewController: UIViewController {
         let sec: Int = count % 60
         timerLabel.text = "\(min):" + String(format: "%02d", sec)
 
+        //画像のアニメーション処理
+        imageAnimetion(img: #imageLiteral(resourceName: "dog"))
+        
         //タイムアップの時の処理
         if count == 0 {
             //タイマーの処理を停止する
@@ -51,13 +51,16 @@ class ViewController: UIViewController {
             self.timerLabel.text = "タイムアップー"
             //タイムアップ画像の表示
             dogImage.image = #imageLiteral(resourceName: "finish")
+            //元のサイズに戻す
+            dogImage.transform = CGAffineTransform(scaleX: CGFloat(1), y: CGFloat(1))
         }
     }
     
     
-    //★画像を小さくする関数
+    //画像を小さくする関数
     func imageAnimetion(img:UIImage) {
-    
+        let rate = Double(count) / Double(300)
+        dogImage.transform = CGAffineTransform(scaleX: CGFloat(rate), y: CGFloat(rate))
     }
     
     
@@ -76,21 +79,18 @@ class ViewController: UIViewController {
         count = 300
         //タイマー表示をリセットする
         self.timerLabel.text = "5:00"
-        //画像を元に戻す
+        //元の画像に戻す
         dogImage.image = #imageLiteral(resourceName: "dog")
+        //元のサイズに戻す
+        dogImage.transform = CGAffineTransform(scaleX: CGFloat(1), y: CGFloat(1))
     }
 
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         dogImage.image = #imageLiteral(resourceName: "dog")
     }
 
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
 }
-
