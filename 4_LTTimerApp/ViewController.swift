@@ -12,18 +12,34 @@ class ViewController: UIViewController {
     
     //時間表示のラベル
     @IBOutlet weak var timerLabel: UILabel!
+    
+    //タイマーが動いているかの判定
+    var timerRinning:Bool = false
 
     //タイマー
     var timer: Timer!
 
+    //カウンターのデフォルトの値
+    var defaultCount:Int = 300
+    
     //残り時間をカウントするための変数
-    var count:Int = 300
+    var count:Int = 10
     
     //画像
     @IBOutlet weak var dogImage: UIImageView!
+    
 
     //スタートボタンを押した時の処理
     @IBAction func tapStartButton(_ sender: Any) {
+        //タイマーの動作判定
+        if timerRinning {
+            //動いている時は処理をスキップ
+            return
+        }
+        
+        //タイマーの動作判定を変更
+        timerRinning = true
+        
         //タイマーのカウントダウン処理
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in self.timerAction()
         })
@@ -57,9 +73,9 @@ class ViewController: UIViewController {
     }
     
     
-    //画像を小さくする関数
+    //画像を小さくする処理
     func imageAnimetion(img:UIImage) {
-        let rate = Double(count) / Double(300)
+        let rate = Float(count) / Float(10)
         dogImage.transform = CGAffineTransform(scaleX: CGFloat(rate), y: CGFloat(rate))
     }
     
@@ -68,6 +84,8 @@ class ViewController: UIViewController {
     @IBAction func tapStopButton(_ sender: Any) {
         //タイマーを停止する
         timer.invalidate()
+        //タイマーの動作判定を変更する
+        timerRinning = false
     }
     
     
@@ -75,8 +93,10 @@ class ViewController: UIViewController {
     @IBAction func tapResetButton(_ sender: Any) {
         //タイマーを停止する
         timer.invalidate()
+        //タイマーの動作判定を変更する
+        timerRinning = false
         //カウンターリセットする
-        count = 300
+        count = 10
         //タイマー表示をリセットする
         self.timerLabel.text = "5:00"
         //元の画像に戻す
