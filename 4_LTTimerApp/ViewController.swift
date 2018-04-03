@@ -23,7 +23,10 @@ class ViewController: UIViewController {
     var defaultCount:Int = 300
     
     //残り時間をカウントするための変数
-    var count:Int = 10
+    var count:Int = 0
+    
+    //デフォルト値でのラベル表示
+    var defaultCountLabel:String = ""
     
     //画像
     @IBOutlet weak var dogImage: UIImageView!
@@ -75,7 +78,7 @@ class ViewController: UIViewController {
     
     //画像を小さくする処理
     func imageAnimetion(img:UIImage) {
-        let rate = Float(count) / Float(10)
+        let rate = Float(count) / Float(defaultCount)
         dogImage.transform = CGAffineTransform(scaleX: CGFloat(rate), y: CGFloat(rate))
     }
     
@@ -96,9 +99,9 @@ class ViewController: UIViewController {
         //タイマーの動作判定を変更する
         timerRinning = false
         //カウンターリセットする
-        count = 10
+        count = defaultCount
         //タイマー表示をリセットする
-        self.timerLabel.text = "5:00"
+        self.timerLabel.text = defaultCountLabel
         //元の画像に戻す
         dogImage.image = #imageLiteral(resourceName: "dog")
         //元のサイズに戻す
@@ -108,6 +111,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dogImage.image = #imageLiteral(resourceName: "dog")
+        count = defaultCount
+        defaultCountLabel = "\(defaultCount / 60)" + ":" + String(format: "%02d", (defaultCount % 60))
+        timerLabel.text = defaultCountLabel
     }
 
     override func didReceiveMemoryWarning() {
